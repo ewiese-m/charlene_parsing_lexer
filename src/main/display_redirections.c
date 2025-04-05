@@ -6,7 +6,7 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 21:30:00 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/03/29 09:30:56 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:05:29 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	display_input_redirection(t_command *cmd)
 {
 	if (cmd->from_file)
-		printf("Input from file: %s\n", cmd->from_file);
+		printf("Input from file: [%s]\n", cmd->from_file);
 	else
 		printf("Input from file: None\n");
 }

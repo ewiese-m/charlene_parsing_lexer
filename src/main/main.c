@@ -6,19 +6,16 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 21:30:00 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/03/29 17:17:36 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:33:54 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_minishell	g_minishell;
-
 static void	setup_signals(void)
 {
 	signal(SIGINT, ft_signal_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
-	rl_catch_signals = 0;
 }
 
 static void	process_command(char *line, t_env *env_list)
@@ -64,7 +61,6 @@ static void	minishell_loop(t_env *env_list)
 
 	while (1)
 	{
-		g_minishell.signal = 0;
 		line = readline("minishell> ");
 		if (!line)
 		{
@@ -81,9 +77,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	g_minishell.force_exit = false;
-	g_minishell.heredoc = false;
-	g_minishell.signal = 0;
 	setup_signals();
 	env_list = ft_get_envp(envp);
 	if (!env_list)
@@ -91,7 +84,6 @@ int	main(int argc, char **argv, char **envp)
 		fprintf(stderr, "Error: Failed to initialize environment\n");
 		return (1);
 	}
-	g_minishell.envs = env_list;
 	minishell_loop(env_list);
 	cleanup_resources(env_list);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 20:24:59 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/03/30 13:59:35 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:16:53 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_check_redirect(t_command *cmd, char **cmd_table)
 			cmd->redirect = redirect_type;
 			if (ft_add_redirection(cmd_table, cmd, i, redirect_len))
 				return (1);
-			cmd->redirect = redirect_type | old_redirect;
+			cmd->redirect |= old_redirect;
 			ft_arrange_table(cmd_table, i, redirect_len);
 			continue ;
 		}

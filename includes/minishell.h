@@ -6,7 +6,7 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 09:43:39 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/03/29 15:21:30 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:32:55 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,7 @@ typedef struct s_env
 /*
 ** Main shell structure
 */
-typedef struct s_minishell
-{
-	bool				force_exit;
-	bool				heredoc;
-	int					signal;
-	t_env				*envs;
-}						t_minishell;
+
 
 /*
 ** Command structure for parsing and execution
@@ -108,6 +102,9 @@ char					*ft_process_quotes(char *str, char *input, int *index,
 char					**ft_realloc(char **ptr, size_t new_size);
 char					*ft_tokenize(char *str, char *input, int *index,
 							t_env *env_list);
+/* tokenize utils */
+
+/* tokenize utils end */
 char					**ft_lexer(char *line, t_env *env_list);
 char					*ft_concat_and_free(char *str1, char *str2);
 char					**ft_resize_string_array(char **array, int current_size,
