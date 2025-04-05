@@ -41,7 +41,7 @@ LEXER_PARSER = $(addprefix $(SRC_DIR)/lexer_parser/, $(LEXER_PARSER_SRC))
 LEXER_PARSER_OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(LEXER_PARSER))
 
 # Environment Management
-ENV_MGMT_SRC = free_list.c ft_create_env_node.c ft_get_envp.c												
+ENV_MGMT_SRC = free_list.c ft_create_env_node.c ft_get_envp.c
 ENV_MGMT = $(addprefix $(SRC_DIR)/environment_management/, $(ENV_MGMT_SRC))
 ENV_MGMT_OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(ENV_MGMT))
 
