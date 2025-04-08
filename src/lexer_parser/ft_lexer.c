@@ -6,7 +6,7 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 19:33:29 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/03/30 15:13:02 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:40:09 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,17 @@ static void	handle_redirection(char *line, int *i, char **cmd_table, int *count)
 	int	start;
 
 	start = *i;
-	while (line[*i] == '<' || line[*i] == '>')
+	if ((line[*i] == '>' && line[*i + 1] == '>') || (line[*i] == '<' && line[*i
+			+ 1] == '<'))
+	{
+		cmd_table[*count] = ft_substr(line, start, 2);
+		*i += 2;
+	}
+	else
+	{
+		cmd_table[*count] = ft_substr(line, start, 1);
 		(*i)++;
-	cmd_table[*count] = ft_substr(line, start, *i - start);
+	}
 	while (line[*i] == ' ' || (line[*i] >= '\t' && line[*i] <= '\r'))
 		(*i)++;
 	if (line[*i] && line[*i] != '<' && line[*i] != '>')
@@ -82,10 +90,18 @@ char	**ft_lexer(char *line, t_env *env_list)
 	cmd_table[0] = (char *)env_list;
 	while (line[i])
 	{
+		while (line[i] == ' ' || (line[i] >= '\t' && line[i] <= '\r'))
+			i++;
+		if (!line[i])
+			break ;
 		if (line[i] == '<' || line[i] == '>')
+		{
 			handle_redirection(line, &i, cmd_table, &count);
+		}
 		else
+		{
 			process_regular_token(line, &i, cmd_table, &count);
+		}
 		cmd_table = resize_cmd_table(cmd_table, &count, &capacity);
 	}
 	cmd_table[count] = NULL;

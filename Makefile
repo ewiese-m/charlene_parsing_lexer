@@ -28,15 +28,33 @@ MAIN = $(addprefix $(SRC_DIR)/main/, $(MAIN_SRC))
 MAIN_OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(MAIN))
 
 # Tokenizer & Parser
-LEXER_PARSER_SRC = count_command.c extract_command.c ft_add_io_file.c \
-					ft_add_redirection.c ft_arrange_table.c ft_checkforgarbage.c \
-					ft_check_redirect.c ft_create_fullcmd.c ft_free_cmdlist.c \
-					ft_free_dstr.c ft_get_redirection.c ft_lexer.c ft_many_cmd.c \
-					ft_many_redirect.c ft_parse_input.c ft_parser.c ft_realloc.c \
-					ft_removesurplusspaces.c ft_tokenize.c parse_cmd_into_array.c \
-					tokenize_parse_and_link_commands.c ft_expand_variable.c \
-					ft_extract_env_var.c ft_process_quotes.c handle_expansion.c \
-					ft_resize_string_array.c
+LEXER_PARSER_SRC = count_command.c \
+extract_command.c \
+ft_add_io_file.c \
+ft_add_redirection.c \
+ft_arrange_table.c \
+ft_checkforgarbage.c \
+ft_check_redirect.c \
+ft_create_fullcmd.c \
+ft_expand_variable.c \
+ft_extract_env_var.c \
+ft_free_cmdlist.c \
+ft_free_dstr.c \
+ft_get_redirection.c \
+ft_lexer.c \
+ft_many_cmd.c \
+ft_many_redirect.c \
+ft_parse_input.c \
+ft_parser.c \
+ft_process_quotes.c \
+ft_realloc.c \
+ft_removesurplusspaces.c \
+ft_resize_string_array.c \
+ft_tokenize.c \
+handle_expansion.c \
+parse_cmd_into_array.c \
+tokenize_parse_and_link_commands.c
+
 LEXER_PARSER = $(addprefix $(SRC_DIR)/lexer_parser/, $(LEXER_PARSER_SRC))
 LEXER_PARSER_OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(LEXER_PARSER))
 
