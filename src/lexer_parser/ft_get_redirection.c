@@ -6,11 +6,9 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 19:35:43 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/04/08 13:42:23 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:07:11 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../../includes/minishell.h"
 
 #include "../../includes/minishell.h"
 
@@ -31,7 +29,7 @@ int	was_quoted_content(char *token)
 	int	special_char_count;
 	int	consecutive_special;
 
-	//printf("DEBUG: was_quoted_content called with token = '%s'\n", token ? token : "NULL");
+	printf("\033[35mDEBUG: was_quoted_content called with token = '%s'\033[0m\n", token ? token : "NULL");
 	if (!token || token[0] == '\0')
 		return (0);
 
@@ -40,7 +38,7 @@ int	was_quoted_content(char *token)
 		ft_strcmp(token, ">>") == 0 || ft_strcmp(token, "<<") == 0 ||
 		ft_strcmp(token, "|") == 0)
 	{
-		//printf("DEBUG: Token is a standard operator, not quoted content\n");
+		printf("\033[35mDEBUG: Token is a standard operator, not quoted content\033[0m\n");
 		return (0);
 	}
 
@@ -49,7 +47,7 @@ int	was_quoted_content(char *token)
 		token[0] != '>' && token[0] != '<' && token[0] != '|' &&
 		token[0] != '*' && token[0] != '?' && token[0] != ';')
 	{
-		//printf("DEBUG: Token is a single non-special character, not quoted content\n");
+		printf("\033[35mDEBUG: Token is a single non-special character, not quoted content\033[0m\n");
 		return (0);
 	}
 
@@ -107,14 +105,14 @@ int	was_quoted_content(char *token)
 			!((token[0] == '>' && token[1] == '>') ||
 			  (token[0] == '<' && token[1] == '<')))
 		{
-			//printf("DEBUG: Token starts with redirection but has additional content, likely quoted\n");
+			printf("\033[35mDEBUG: Token starts with redirection but has additional content, likely quoted\033[0m\n");
 			return (1);
 		}
 		else if (ft_strlen(token) == 2 &&
 				!((token[0] == '>' && token[1] == '>') ||
 				  (token[0] == '<' && token[1] == '<')))
 		{
-			//printf("DEBUG: Token is redirector + another char, likely quoted\n");
+			printf("\033[35mDEBUG: Token is redirector + another char, likely quoted\033[0m\n");
 			return (1);
 		}
 	}
@@ -122,7 +120,7 @@ int	was_quoted_content(char *token)
 	// Special case: Check for pipe at the start followed by something other than pipe
 	if (token[0] == '|' && ft_strlen(token) > 1 && token[1] != '|')
 	{
-		//printf("DEBUG: Token starts with pipe but has additional non-pipe content, likely quoted\n");
+		printf("\033[35mDEBUG: Token starts with pipe but has additional non-pipe content, likely quoted\033[0m\n");
 		return (1);
 	}
 
@@ -131,22 +129,22 @@ int	was_quoted_content(char *token)
 	// Rule 1: Contains both spaces AND special characters
 	if (has_spaces && has_special_chars)
 	{
-		//printf("DEBUG: Token contains both spaces and special characters, likely quoted\n");
+		printf("\033[35mDEBUG: Token contains both spaces and special characters, likely quoted\033[0m\n");
 		return (1);
 	}
 
 	// Rule 2: Contains multiple different special characters
 	if (special_char_count > 2)
 	{
-		//printf("DEBUG: Token contains multiple special characters (%d), likely quoted\n",
-			   //special_char_count);
+		printf("\033[35mDEBUG: Token contains multiple special characters (%d), likely quoted\033[0m\n",
+			   special_char_count);
 		return (1);
 	}
 
 	// Rule 3: Contains consecutive special characters that aren't valid operators
 	if (consecutive_special)
 	{
-		//printf("DEBUG: Token contains unusual consecutive special characters, likely quoted\n");
+		printf("\033[35mDEBUG: Token contains unusual consecutive special characters, likely quoted\033[0m\n");
 		return (1);
 	}
 
@@ -157,51 +155,46 @@ int	was_quoted_content(char *token)
 		if ((token[i] == '\'' || token[i] == '"') &&
 			(token[0] != token[i] && token[ft_strlen(token)-1] != token[i]))
 		{
-			//printf("DEBUG: Token contains quote character in the middle, likely quoted\n");
+			printf("\033[35mDEBUG: Token contains quote character in the middle, likely quoted\033[0m\n");
 			return (1);
 		}
 		i++;
 	}
 
-	//printf("DEBUG: No evidence token was quoted content, returning 0\n");
+	printf("\033[35mDEBUG: No evidence token was quoted content, returning 0\033[0m\n");
 	return (0);
 }
-
-/* int	ft_get_redirection(char *token)
-{
-	if (!token)
-		return (0);
-	if (token[0] == '>')
-	{
-		if (token[1] == '>')
-			return (APPEND);
-		return (OUT_REDIR);
-	}
-	else if (token[0] == '<')
-	{
-		if (token[1] == '<')
-			return (HEREDOC);
-		return (IN_REDIR);
-	}
-	return (0);
-}
- */
 
 // Get redirection type from token
-
-//TODO : corregir el ejemplo 13 y 14.
 int	ft_get_redirection(char *token)
 {
-	if (!token || was_quoted_content(token))
-	//if (!token)
+	int result = 0;
+
+	printf("\033[35mDEBUG: ft_get_redirection called with token = '%s'\033[0m\n",
+       token ? token : "NULL");
+
+	if (!token || was_quoted_content(token)) {
+		printf("\033[35mDEBUG: Token is NULL or quoted content, not a redirection\033[0m\n");
 		return (0);
-	if (ft_strncmp(token, ">>", 2) == 0)
-		return (APPEND);
-	if (ft_strncmp(token, "<<", 2) == 0)
-		return (HEREDOC);
-	if (ft_strncmp(token, "<", 1) == 0)
-		return (IN_REDIR);
-	if (ft_strncmp(token, ">", 1) == 0)
-		return (OUT_REDIR);
-	return (0);
+	}
+
+	if (ft_strncmp(token, ">>", 2) == 0) {
+		result = APPEND;
+		printf("\033[35mDEBUG: Found APPEND redirection (>>)\033[0m\n");
+	}
+	else if (ft_strncmp(token, "<<", 2) == 0) {
+		result = HEREDOC;
+		printf("\033[35mDEBUG: Found HEREDOC redirection (<<)\033[0m\n");
+	}
+	else if (ft_strncmp(token, "<", 1) == 0) {
+		result = IN_REDIR;
+		printf("\033[35mDEBUG: Found INPUT redirection (<)\033[0m\n");
+	}
+	else if (ft_strncmp(token, ">", 1) == 0) {
+		result = OUT_REDIR;
+		printf("\033[35mDEBUG: Found OUTPUT redirection (>)\033[0m\n");
+	}
+
+	printf("\033[35mDEBUG: ft_get_redirection returning %d\033[0m\n", result);
+	return (result);
 }
