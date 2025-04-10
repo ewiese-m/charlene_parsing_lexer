@@ -6,7 +6,7 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 20:22:23 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/04/10 13:07:25 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/10 21:01:38 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	ft_add_redirection(char **table, t_command *cmd, int index, int len)
     {
         printf("\033[31mDEBUG: Adding input redirection file\033[0m\n");
         cmd->from_file = ft_add_io_file(cmd->from_file, table[index], len);
-        if (cmd->from_file)
+/*         if (cmd->from_file)
             printf("\033[31mDEBUG: Input file set to '%s'\033[0m\n", cmd->from_file);
         else
-            printf("\033[31mDEBUG: Failed to set input file\033[0m\n");
+            printf("\033[31mDEBUG: Failed to set input file\033[0m\n"); */
     }
     else if (cmd->redirect & HEREDOC)
     {

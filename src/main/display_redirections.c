@@ -6,18 +6,29 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 21:30:00 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/04/05 13:05:29 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/10 20:57:20 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	display_input_redirection(t_command *cmd)
+static void display_input_redirection(t_command *cmd)
 {
-	if (cmd->from_file)
-		printf("Input from file: [%s]\n", cmd->from_file);
-	else
-		printf("Input from file: None\n");
+    int in_idx;
+
+    printf("Input from files: ");
+    if (cmd->from_file)
+    {
+        in_idx = 0;
+        while (cmd->from_file[in_idx])
+        {
+            printf("[%s] ", cmd->from_file[in_idx]);
+            in_idx++;
+        }
+        printf("\n");
+    }
+    else
+        printf("None\n");
 }
 
 static void	display_heredoc(t_command *cmd)

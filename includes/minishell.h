@@ -6,7 +6,7 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 09:43:39 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/04/05 13:32:55 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/10 21:00:46 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_env
 ** Main shell structure
 */
 
-
 /*
 ** Command structure for parsing and execution
 */
@@ -53,7 +52,7 @@ typedef struct s_command
 	char				*command;
 	char				**args;
 	char				**full_cmd;
-	char				*from_file;
+	char **from_file; // Changed from char* to char**
 	char				**hdocs_end;
 	char				**to_file;
 	int					redirect;
@@ -111,7 +110,7 @@ char					**ft_resize_string_array(char **array, int current_size,
 							int target_size);
 int						ft_get_redirection(char *token);
 void					ft_arrange_table(char **table, int index, int len);
-char					*ft_add_io_file(char *old_file, char *new_file,
+char					**ft_add_io_file(char **old_files, char *new_file,
 							int len_redirection);
 char					**ft_many_redirect(char **old_files, char *new_file,
 							int len);

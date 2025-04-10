@@ -6,7 +6,7 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 20:21:11 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/04/10 13:07:40 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/10 20:56:06 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@ static t_command	*init_cmd_struct(void)
 
 	printf("\033[33mDEBUG: init_cmd_struct called\033[0m\n");
 	cmd = (t_command *)ft_calloc(1, sizeof(t_command));
+	if (cmd)
+    {
+        cmd->command = NULL;
+        cmd->args = NULL;
+        cmd->full_cmd = NULL;
+        cmd->from_file = NULL;  // This already sets it to NULL
+        cmd->hdocs_end = NULL;
+        cmd->to_file = NULL;
+        cmd->redirect = 0;
+        cmd->input = 0;
+        cmd->output = 0;
+        cmd->next = NULL;
+    }
 	printf("\033[33mDEBUG: Command structure %s\033[0m\n",
 	       cmd ? "initialized successfully" : "initialization failed");
 	return (cmd);

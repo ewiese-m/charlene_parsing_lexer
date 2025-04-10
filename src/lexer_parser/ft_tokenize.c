@@ -6,26 +6,34 @@
 /*   By: ewiese-m <ewiese-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 19:33:11 by ewiese-m          #+#    #+#             */
-/*   Updated: 2025/04/10 13:08:21 by ewiese-m         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:29:28 by ewiese-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*handle_quotes(char *str, char *input, int *i, t_env *env_list)
+static char *handle_quotes(char *str, char *input, int *i, t_env *env_list)
 {
-	char *result;
-	char quote_type = input[*i];
+    char *result;
+    char quote_type = input[*i];
+    //int start_pos = *i;
 
-	printf("\033[32mDEBUG: handle_quotes called at position %d with quote '%c'\033[0m\n",
-	       *i, quote_type);
+    printf("\033[32mDEBUG: handle_quotes called at position %d with quote '%c'\033[0m\n",
+           *i, quote_type);
 
-	result = ft_process_quotes(str, input, i, env_list);
+    // Process the quoted content
+    result = ft_process_quotes(str, input, i, env_list);
 
-	printf("\033[32mDEBUG: handle_quotes returned '%s', new position: %d\033[0m\n",
-	       result ? result : "NULL", *i);
+    // Check if we found the closing quote
+    if (input[*i] == quote_type) {
+        // Move past the closing quote
+        (*i)++;
+    }
 
-	return (result);
+    printf("\033[32mDEBUG: handle_quotes returned '%s', new position: %d\033[0m\n",
+           result ? result : "NULL", *i);
+
+    return (result);
 }
 
 static char	*handle_dollar_sign(char *str, char *input, int *i, t_env *env_list)
